@@ -1,0 +1,143 @@
+{% extends 'main.htm' %} {% block title %} Dashboard - HOME {% endblock %}{% block content %}
+
+<div class="container-fluid">
+    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-dark mb-0">Dashboard</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a></div>
+    <div class="row">
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-primary py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Total Bedspaces Available</span></div>
+                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{total_spaces_available}}</span></div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-success py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Total Number Of Occupants</span></div>
+                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{occupants.count}}</span></div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-info py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>Amount Received</span></div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>GHS {{ amount_received }}</span></div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-left-warning py-2">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col mr-2">
+                            <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Number Of Workers</span></div>
+                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{ workers.count }}</span></div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Start: Chart -->
+    <div class="row">
+        <div class="col-lg-7 col-xl-8">
+            <div class="card shadow mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="text-primary font-weight-bold m-0">Rooms Available</h6>
+                </div>
+                <div class="card-body">
+                    <!-- Rooms Available Table -->
+                    <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+
+                        <table class="table dataTable my-0" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Room Number</th>
+                                    <th>Room type</th>
+                                    <th>Spaces Available</th>
+                                    <th>Price Per Bed<b>(GHS)</b></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for room in rooms %} {% if room.spaces_available > 0 %}
+                                <tr>
+                                    <td>{{ room.room_number }}</td>
+                                    <td>{{room.room_type}}</td>
+                                    <td>{{room.spaces_available}}</td>
+                                    <td>{{room.price_per_bed}}</td>
+                                    <!-- <td><button class="btn btn-primary"><a style="color: white;" href="{% url 'updateRoom' room.id %}">Update</a></button></td> -->
+                                </tr>
+                                {% endif %} {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-xl-4">
+            <div class="card shadow mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="text-primary font-weight-bold m-0">Owing Occupants</h6>
+                </div>
+                <div class="card-body">
+
+
+                    <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+
+                        <table class="table dataTable my-0" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Amount Owing</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody style="font-size: 15px; ">
+                                {% for occupant in occupants %} {% if occupant.room_occupied.price_per_bed > occupant.amount_paid%}
+                                <tr>
+                                    <td>{{ occupant.first_name }} {{occupant.last_name}}</td>
+                                    <td>GHS {{ occupant.get_balance }}</td>
+
+
+                                </tr>
+                                {% endif %} {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- End: Chart -->
+
+
+    </div>
+</div>
+{% endblock %}

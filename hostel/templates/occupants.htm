@@ -1,0 +1,95 @@
+{% extends 'main.htm' %} {% block title %} Occupants {% endblock %} {% block content %}
+
+<style>
+    a:hover {
+        color: rgb(255, 0, 0);
+    }
+    
+    a {
+        text-decoration: none;
+    }
+    
+    #message {
+        padding: 5px;
+        text-align: center;
+        color: rgb(197, 40, 40);
+    }
+</style>
+
+<hr> {% for message in messages %}
+
+<p id="message">{{message}}</p>
+{% endfor %}
+<hr>
+<div class="container-fluid">
+    <h3 class="text-dark mb-4">Occupants</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <span class="text-success m-0 font-weight-bold">Occupant Info</span>
+            <span class="text-primary" style="float: right; margin-right: 10px;"><a href="{% url 'addOccupant' %}" style="text-decoration: none;">Add Occupant</a></span>
+        </div>
+        <div class="card-body">
+            {% if occupants.count == 0 %}
+            <div class="row">
+                <h1 class="text-secondary" style="text-align: center; font-size: 80px">No Occupant is registered</h1>
+            </div>
+            <h6><a href="{% url 'addOccupant' %}" class="text-primary" style="text-decoration: none; text-transform: uppercase; font-weight: bold;">Add new Occupant</a> </h6> {% endif %} {% if occupants.count > 0 %}
+
+
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+
+                <table class="table dataTable my-0" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Room Occupied</th>
+                            <th>Phone Number</th>
+                            <th>Amount Paid<b>(GHS)</b></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for occupant in occupants %}
+                        <tr>
+                            <td>{{ occupant.first_name }} {{occupant.last_name}}</td>
+                            <td>{{occupant.room_occupied}}</td>
+                            <td>{{occupant.phone}}</td>
+                            {% if occupant.amount_paid >= occupant.room_occupied.price_per_bed %}
+                            <td>Full payment</td>
+                            {% else %}
+                            <td>{{occupant.amount_paid}} of {{occupant.room_occupied.price_per_bed}}</td>
+                            {% endif %}
+                            <td><button class="btn btn-primary"><a style="color: white;" href="{% url 'updateOccupant' occupant.id %}">Update</a></button></td>
+                            <td><button class="btn btn-danger"><a onclick="return confirm('Are you sure?')" style="color: white;" href="{% url 'deleteOccupant' occupant.id %}">Delete</a></button></td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 align-self-center">
+                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
+                </div>
+                <div class="col-md-6">
+                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                        <ul class="pagination">
+                            <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'main.htm' %} {% block title %} Rooms {% endblock %} {% block content %}
+
+<style>
+    a:hover {
+        color: rgb(255, 0, 0);
+    }
+</style>
+
+
+<div class="container-fluid">
+    <h3 class="text-dark mb-4">Rooms</h3>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <span class="text-success m-0 font-weight-bold">Room Info</span>
+            <span class="text-primary" style="float: right; margin-right: 10px;"><a href="{% url 'addRoom' %}" style="text-decoration: none;">Add Room</a></span>
+        </div>
+        <div class="card-body">
+            {% if rooms.count == 0 %}
+            <div class="row">
+                <h1 class="text-secondary" style="text-align: center; font-size: 80px">No Room is registered</h1>
+            </div>
+            <h6><a href="{% url 'addRoom' %}" class="text-primary" style="text-decoration: none; text-transform: uppercase; font-weight: bold;">Add new Room</a> </h6> {% endif %} {% if rooms.count > 0 %}
+
+
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+
+                <table class="table dataTable my-0" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Room Number</th>
+                            <th>Room type</th>
+                            <th>Spaces Available</th>
+                            <th>Price Per Bed<b>(GHS)</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for room in rooms %}
+                        <tr>
+                            <td>{{ room.room_number }}</td>
+                            <td>{{room.room_type}}</td>
+                            <td>{{room.spaces_available}}</td>
+                            <td>{{room.price_per_bed}}</td>
+                            <td><button class="btn btn-primary"><a style="color: white;" href="{% url 'updateRoom' room.id %}">Update</a></button></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 align-self-center">
+                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
+                </div>
+                <div class="col-md-6">
+                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                        <ul class="pagination">
+                            <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

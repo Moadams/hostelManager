@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Staff Login</title>
+    <link rel="stylesheet" href="{% static './css/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+
+    <style>
+        #message {
+            padding: 5px;
+            text-align: center;
+            color: rgb(197, 40, 40);
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-success">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-12 col-xl-10" style="margin-top: 100px;">
+                <div class="card shadow-lg o-hidden border-0 my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-flex">
+                                <div class="flex-grow-1 bg-login-image" style=" background-image: url(&quot;{% static './img/dogs/image2.jpeg' %}&quot;);"></div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h4 class="text-dark mb-4">Welcome!</h4>
+                                    </div>
+                                    <form class="user" action="" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <input class="form-control form-control-user" type="text" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" name="username">
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password">
+                                        </div>
+                                        <input type="submit" value="Login" class="btn btn-success btn-block text-white btn-user">
+                                        <hr> {% for message in messages %}
+
+                                        <p id="message">{{message}}</p>
+                                        {% endfor %}
+                                        <hr>
+
+                                        <!-- <a class="btn btn-primary btn-block text-white btn-google btn-user" role="button"><i class="fab fa-google"></i>&nbsp; Login with Google</a>
+                                        <a class="btn btn-primary btn-block text-white btn-facebook btn-user" role="button"><i class="fab fa-facebook-f"></i>&nbsp; Login with Facebook</a> -->
+
+                                    </form>
+                                    <!-- <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div> -->
+                                    <!-- <div class="text-center"><a class="small" href="./register.html">Create an Account!</a></div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="{% static './js/script.min.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+{% extends 'main.htm' %} {% block title %} Add New Occupant {% endblock %} {% block content %}
+
+
+
+<div class="container-fluid">
+    <h3 class="text-dark mb-4 ">
+        Add Occupant
+    </h3>
+    <div class="card shadow">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h6 class="text-primary font-weight-bold m-0">Add Occupant Form </h6>
+        </div>
+        <div class="card-body">
+            <div class="">
+                <form action="" method="POST">
+                    {% csrf_token %} {{occupantForm}}
+                    <br>
+                    <input type="submit" class="btn btn-success" value="Add Occupant">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
