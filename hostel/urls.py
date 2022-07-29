@@ -21,4 +21,5 @@ urlpatterns = [
 
     path('occupant/delete/<str:pk>', views.deleteOccupant, name = 'deleteOccupant'),
     path('worker/delete/<str:pk>', views.deleteWorker, name = 'deleteWorker'),
+    path('room/delete-room/<str:pk>',views.deleteRoom, name='deleteRoom')
 ]

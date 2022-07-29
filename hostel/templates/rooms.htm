@@ -40,7 +40,8 @@
                             <td>{{room.room_type}}</td>
                             <td>{{room.spaces_available}}</td>
                             <td>{{room.price_per_bed}}</td>
-                            <td><button class="btn btn-primary"><a style="color: white;" href="{% url 'updateRoom' room.id %}">Update</a></button></td>
+                            <td><button class="btn btn-primary"><a style="color: white;" href="{% url 'updateRoom' room.id %}">Update</a></button>
+                            <button class="btn btn-primary"><a style="color: white;" href="{% url 'deleteRoom' room.id %}">Delete</a></button></td>
                         </tr>
                         {% endfor %}
                     </tbody>

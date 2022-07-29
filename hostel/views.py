@@ -261,3 +261,14 @@ def deleteOccupant(request,pk):
     occupant.delete()
     messages.warning(request,f'{occupant} has been deleted')
     return redirect('occupants')
+
+
+#  --------------------------------------------------------------------------
+#                            DELETE ROOM
+# ---------------------------------------------------------------------------
+@login_required(login_url='loginPage')
+def deleteRoom(request,pk):
+    room = Room.objects.get(id = pk)
+    room.delete()
+    messages.warning(request,f'{room} has been deleted')
+    return redirect('rooms')
