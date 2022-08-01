@@ -26,25 +26,13 @@ class Room(models.Model):
     room_number = models.CharField(max_length = 5)
     block = models.CharField(max_length = 50, blank = True)
     room_type = models.CharField(max_length = 12, choices = ROOM_TYPE)
-    # room_size = models.PositiveIntegerField()
     spaces_available = models.PositiveIntegerField(default = 0)
     price_per_bed = models.DecimalField(default = 0.00,max_digits=7, decimal_places=2)
-
-    # def save(self,*args,**kwargs):
-    #     if self.room_type == 'One in One':
-    #         self.room_size = 1
-    #     elif self.room_type == 'Two in One':
-    #         self.room_size = 2
-    #     elif self.room_type == 'Three in One':
-    #         self.room_size = 3
-    #     else:
-    #         self.room_size = 4
 
     def __str__(self):
         return f'Room {self.room_number} ({self.room_type})'
 
 
-    
 class Worker(models.Model):
     name = models.CharField(max_length = 50)
     position = models.CharField(max_length = 100)
@@ -64,13 +52,9 @@ class Occupant(models.Model):
     amount_paid = models.DecimalField(max_digits=7,decimal_places=2,default = 0.00)
 
 
-    # def save(self,*args,**kwargs):
-        
-    #     super().save(*args,**kwargs)
-
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
-    
+
     @property
     def get_balance(self):
         if self.amount_paid < self.room_occupied.price_per_bed:
@@ -84,25 +68,7 @@ def delete_occupant(sender,instance,**kwargs):
     room = instance.room_occupied
     room.spaces_available += 1
     room.save()
-    
 
-# @receiver(post_save,sender = Occupant)
-# def save_occupant(sender, instance, **kwargs):
-#     room = instance.room_occupied
-#     roomOccupants = []
-#     occupants = Occupant.objects.all()
-#     for occupant in occupants:
-#         if occupant.room_occupied == room:
-#             roomOccupants.append(occupant)
-    
-#     if instance not in roomOccupants:
-#         room.spaces_available -= 1
-#         print("Magen")
-#     else:
-#         pass
-#     print(roomOccupants)
-#     print(instance)
-#     room.save()
 
 @receiver(pre_save,sender = Occupant)
 def save_occupant(sender, instance, **kwargs):

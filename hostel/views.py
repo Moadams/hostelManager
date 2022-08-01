@@ -61,9 +61,11 @@ def homePage(request):
     for room in rooms:
         total_spaces_available += room.spaces_available
 
+    
     for occupant in occupants:
         amount_received += occupant.amount_paid
 
+    
     context = {
         'occupants':occupants,
         'rooms':rooms,
